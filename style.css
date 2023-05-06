@@ -1,0 +1,30 @@
+:root {
+    --theme-dark-color: #ff0000;
+    --theme-light-color: #fff3e4;
+}
+
+body {
+    display: grid;
+    grid-template-rows: 50px minmax(95vh, 1fr) 50px;
+}
+
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#footer,
+#footer a {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+#footer a {
+    text-decoration: none;
+    color: inherit;
+}
+#footer svg {
+    height: 26px;
+}
