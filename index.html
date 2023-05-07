@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -17,42 +16,48 @@
     <div id="main">
         <h2>Books</h2>
 
-        <div>
-            <h3>Book Title</h3>
-            <p>Info</p>
-            <button>Edit</button>
-            <button>Remove</button>
+        <div id="books">
+            <div>
+                <div>
+                    <h3>Book Title</h3>
+                    <p>Info</p>
+                    <button>Mark as read</button>
+                    <button>Edit</button>
+                    <button>Remove</button>
+                </div>
+            </div>
+        
+            <div id="add-book-container">
+                <form>
+                    <fieldset>
+                        <legend>Add new</legend>
+
+                        <div>
+                            <label for="book-title">Title</label>
+                            <input type="text" id="book-title" />
+                        </div>
+
+                        <div>
+                            <label for="book-author">Author</label>
+                            <input type="text" id="book-author" />
+                        </div>
+
+                        <div>
+                            <label for="book-pages">Number of pages</label>
+                            <input type="number" id="book-pages" />
+                        </div>
+
+                        <div>
+                            <label for="book-color">Book color</label>
+                            <input type="color" id="book-color" />
+                        </div>
+
+                        <button type="submit">Add book</button>
+                    </fieldset>
+                </form>
+            </div>
         </div>
-
-        <div id="add-book-container">
-            <form>
-                <fieldset>
-                    <legend>Add new</legend>
-
-                    <div>
-                        <label for="book-title">Title</label>
-                        <input type="text" id="book-title" />
-                    </div>
-                    
-                    <div>
-                        <label for="book-author">Author</label>
-                        <input type="text" id="book-author" />
-                    </div>
-                    
-                    <div>
-                        <label for="book-pages">Number of pages</label>
-                        <input type="number" id="book-pages" />
-                    </div>
-                    
-                    <div>
-                        <label for="book-color">Book color</label>
-                        <input type="color" id="book-color" />
-                    </div>
-
-                    <button type="submit">Add book</button>
-                </fieldset>
-            </form>
-        </div>
+    
     </div>
     <div id="footer">
         Copyright &copy;
@@ -69,5 +74,4 @@
     </div>
     <script src="script.js"></script>
 </body>
-
 </html>
