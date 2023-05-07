@@ -35,7 +35,35 @@ body {
     box-shadow: 3px 3px 5px #00000040;
     border-radius: var(--radius);
 }
-#books > div > div,
+
+div.book {
+    display: grid;
+    gap: 8px;
+    grid-template: auto 1fr auto auto / 1fr 1fr;
+}
+div.book h3,
+div.book p,
+div.book .read {
+    grid-column: 1 / -1;
+}
+
+.book button {
+    border: none;
+    border-radius: calc(var(--radius) - 4px);
+    color: white;
+    background-color: var(--theme-dark-color);
+    padding: 12px 0;
+}
+.book button:hover {
+    opacity: 0.7;
+}
+.book button:active {
+    color: var(--theme-dark-color);
+    background-color: unset;
+    border: 1px solid var(--theme-dark-color);
+}
+
+div.book,
 #books form {
     padding: 16px;
 }
