@@ -36,6 +36,24 @@ body {
     box-shadow: 3px 3px 5px #00000040;
     border-radius: var(--radius);
 }
+#books > div,
+#books form {
+    display: grid;
+    align-content: center;
+}
+#books > div:not(#add-book-container) {
+    position: relative;
+}
+#books > div:not(#add-book-container)::after {
+    content: "";
+    background-color: #ffc400;
+    position: absolute;
+    height: 1.5em;
+    width: 1.5em;
+    top: 8px;
+    right: 8px;
+    border-radius: 50%;
+}
 
 div.book {
     display: grid;
@@ -47,7 +65,6 @@ div.book p,
 div.book .read {
     grid-column: 1 / -1;
 }
-
 div.book h3,
 #books legend {
     font-size: 1.2em;
@@ -61,7 +78,8 @@ div.book p,
     margin: 0;
 }
 
-.book button {
+.book button,
+#add-book-container button[type='submit'] {
     font-weight: bold;
     border: none;
     border-radius: calc(var(--radius) - 4px);
@@ -69,10 +87,12 @@ div.book p,
     background-color: var(--theme-dark-color);
     padding: 12px 0;
 }
-.book button:hover {
+.book button:hover,
+#add-book-container button[type='submit']:hover {
     opacity: 0.7;
 }
-.book button:active {
+.book button:active,
+#add-book-container button[type='submit']:active {
     color: var(--theme-dark-color);
     background-color: unset;
     border: 1px solid var(--theme-dark-color);
@@ -81,6 +101,33 @@ div.book p,
 div.book,
 #books form {
     padding: 16px;
+}
+
+#add-book-container fieldset {
+    border: none;
+    display: grid;
+    gap: 6px;
+    grid-template: repeat(4, 1fr) auto / 1fr 1fr;
+    align-items: center;
+}
+#add-book-container fieldset div {
+    display: grid;
+    grid-auto-rows: auto;
+}
+#add-book-container fieldset div:not(.span-1),
+#add-book-container button[type='submit'] {
+    grid-column: 1 / -1;
+}
+#add-book-container input {
+    padding: 3px 0;
+    border: none;
+    border-radius: 3px;
+    border-bottom: 1px solid black;
+}
+#add-book-container input[type='color'] {
+    width: 100%;
+    background-color: inherit;
+    padding: unset;
 }
 
 #footer,
