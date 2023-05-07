@@ -8,6 +8,7 @@ body {
     margin: 0;
     display: grid;
     grid-template-rows: auto minmax(95vh, 1fr) auto;
+    font-family: 'Open Sans', Helvetica, sans-serif;
 }
 
 #header {
@@ -47,7 +48,21 @@ div.book .read {
     grid-column: 1 / -1;
 }
 
+div.book h3,
+#books legend {
+    font-size: 1.2em;
+    margin: 0;
+    font-weight: bold;
+}
+
+div.book p,
+#books label {
+    font-size: 0.9em;
+    margin: 0;
+}
+
 .book button {
+    font-weight: bold;
     border: none;
     border-radius: calc(var(--radius) - 4px);
     color: white;
