@@ -129,6 +129,10 @@ div.book,
     border-radius: 3px;
     border-bottom: 1px solid black;
 }
+#book-actions-container input:active,
+#book-actions-container input:focus {
+    outline: none;
+}
 #book-actions-container fieldset > *:not(button) {
     grid-column: 1 / -1;
 }
