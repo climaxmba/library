@@ -44,10 +44,10 @@ body {
     display: grid;
     align-content: center;
 }
-#books > div:not(#add-book-container) {
+#books > div:not(#book-actions-container) {
     position: relative;
 }
-#books > div:not(#add-book-container)::after {
+#books > div:not(#book-actions-container)::after {
     content: "";
     background-color: #ffc400;
     position: absolute;
@@ -112,28 +112,28 @@ div.book,
     padding: 16px;
 }
 
-#add-book-container fieldset {
+#book-actions-container fieldset {
     border: none;
     display: grid;
     gap: 6px;
     grid-template: repeat(4, 1fr) auto / 1fr 1fr;
     align-items: center;
 }
-#add-book-container fieldset div {
+#book-actions-container fieldset div {
     display: grid;
     grid-auto-rows: auto;
 }
-#add-book-container fieldset div:not(.span-1),
-#add-book-container button[type='submit'] {
+#book-actions-container fieldset div:not(.span-1),
+#book-actions-container button[type='submit'] {
     grid-column: 1 / -1;
 }
-#add-book-container input {
+#book-actions-container input {
     padding: 3px 0;
     border: none;
     border-radius: 3px;
     border-bottom: 1px solid black;
 }
-#add-book-container input[type='color'] {
+#book-actions-container input[type='color'] {
     width: 100%;
     background-color: inherit;
     padding: unset;
