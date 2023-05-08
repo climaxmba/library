@@ -1,6 +1,7 @@
 :root {
-    --theme-dark-color: #ff0000;
-    --theme-light-color: #fff3e4;
+    --theme-color: #dddddd;
+    --button-red: #ff4747;
+    --button-green: #17b43f;
     --radius: 12px;
 }
 
@@ -77,25 +78,33 @@ div.book p,
     font-size: 0.9em;
     margin: 0;
 }
-
-.book button,
-#add-book-container button[type='submit'] {
+#books button {
     font-weight: bold;
     border: none;
     border-radius: calc(var(--radius) - 4px);
-    color: white;
-    background-color: var(--theme-dark-color);
     padding: 12px 0;
+    cursor: pointer;
 }
-.book button:hover,
-#add-book-container button[type='submit']:hover {
-    opacity: 0.7;
+#books button:hover {
+    opacity: 0.8;
 }
-.book button:active,
-#add-book-container button[type='submit']:active {
-    color: var(--theme-dark-color);
+button.btn-red {
+    font-weight: bold;
+    color: white;
+    background-color: var(--button-red);
+}
+button.btn-red:active {
+    color: var(--button-red);
     background-color: unset;
-    border: 1px solid var(--theme-dark-color);
+}
+button.btn-green {
+    font-weight: bold;
+    color: white;
+    background-color: var(--button-green);
+}
+button.btn-green:active {
+    color: var(--button-green);
+    background-color: unset;
 }
 
 div.book,
