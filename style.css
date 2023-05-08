@@ -3,7 +3,7 @@
     --button-red: #ff4747;
     --button-green: #17b43f;
     --radius: 12px;
-    --card: 3px 3px 5px #00000040;
+    --card: 2px 2px 5px 1px #00000040;
     --card-inset: inset 0 3px 5px #00000040;
 }
 
@@ -30,9 +30,9 @@ body {
 }
 #main > div {
     display: grid;
-    gap: 10px;
+    gap: 18px;
     grid-auto-rows: 1fr;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
 }
 
 #books > div {
@@ -115,17 +115,13 @@ div.book,
 #book-actions-container fieldset {
     border: none;
     display: grid;
-    gap: 6px;
-    grid-template: repeat(4, 1fr) auto / 1fr 1fr;
+    gap: 8px;
+    grid-template: repeat(5, auto) / 1fr 1fr;
     align-items: center;
 }
 #book-actions-container fieldset div {
     display: grid;
     grid-auto-rows: auto;
-}
-#book-actions-container fieldset div:not(.span-1),
-#book-actions-container button[type='submit'] {
-    grid-column: 1 / -1;
 }
 #book-actions-container input {
     padding: 3px 0;
@@ -133,10 +129,8 @@ div.book,
     border-radius: 3px;
     border-bottom: 1px solid black;
 }
-#book-actions-container input[type='color'] {
-    width: 100%;
-    background-color: inherit;
-    padding: unset;
+#book-actions-container fieldset > *:not(button) {
+    grid-column: 1 / -1;
 }
 
 #footer,
