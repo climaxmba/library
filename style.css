@@ -44,17 +44,6 @@ body {
     display: grid;
     align-content: center;
 }
-#books > div:not(#book-actions-container) {
-    position: relative;
-}
-#books > div:not(#book-actions-container)::after {
-    content: "";
-    background-color: #ffc400;
-    position: absolute;
-    height: 2.5em;
-    width: 100%;
-    top: 8px;
-}
 
 div.book {
     display: grid;
@@ -112,28 +101,28 @@ div.book,
     padding: 16px;
 }
 
-#book-actions-container fieldset {
+#books fieldset {
     border: none;
     display: grid;
     gap: 8px;
     grid-template: repeat(5, auto) / 1fr 1fr;
     align-items: center;
 }
-#book-actions-container fieldset div {
+#books fieldset div {
     display: grid;
     grid-auto-rows: auto;
 }
-#book-actions-container input {
+#books input {
     padding: 3px 0;
     border: none;
     border-radius: 3px;
     border-bottom: 1px solid black;
 }
-#book-actions-container input:active,
-#book-actions-container input:focus {
+#books input:active,
+#books input:focus {
     outline: none;
 }
-#book-actions-container fieldset > *:not(button) {
+#books fieldset > *:not(button) {
     grid-column: 1 / -1;
 }
 

@@ -63,18 +63,18 @@ function addEvents(arrLength) {
           <legend>Edit</legend>
           <div>
               <label for="book-title">Title</label>
-              <input type="text" id="book-title" required/>
+              <input type="text" id="book-title" value="${myLibrary[i].title}" required/>
           </div>
           <div>
               <label for="book-author">Author</label>
-              <input type="text" id="book-author" required/>
+              <input type="text" id="book-author" value="${myLibrary[i].author}" required/>
           </div>
           <div>
               <label for="book-pages">Number of pages</label>
-              <input type="number" id="book-pages" required/>
+              <input type="number" id="book-pages" value="${myLibrary[i].pages}" required/>
           </div>
-          <button id="cancel-btn" class="btn-red">Cancel</button>
-          <button type="submit" class="btn-red">Add book</button>
+          <button type="button" id="cancel-btn" class="btn-red">Cancel</button>
+          <button type="submit" class="btn-red">Save</button>
       </fieldset>
   </form>`;
       return;
