@@ -24,19 +24,68 @@ updateDisplay();
 
 function updateDisplay() {
   let arrLength = myLibrary.length;
+  clearDisplay();
 
   for (let i = 0; i < arrLength; i++) {
     let node = document.createElement("div");
+    node.setAttribute('data-index', `${i}`);
 
-    node.innerHTML = `<div class="book" data-index="${i}">
-                    <h3>${myLibrary[i].title}</h3>
-                    <p>${myLibrary[i].info()}</p>
-                    <button class="read btn-green">Mark as read</button>
-                    <button class="btn-green">Edit</button>
-                    <button class="btn-red">Remove</button>
-                </div>
-            </div>`;
+    node.innerHTML = `<div class="book">
+                        <h3>${myLibrary[i].title}</h3>
+                        <p>${myLibrary[i].info()}</p>
+                        <button class="read btn-green">${(myLibrary[i].read) ? "Mark as unread" : "Mark as read"}</button>
+                        <button class="edit-btn btn-green">Edit</button>
+                        <button class="remove-btn btn-red">Remove</button>
+                      </div>`;
 
-    bookDisplay.appendChild(node);
+    bookDisplay.insertBefore(node, bookDisplay.children[i]);
+  }
+
+  addEvents(arrLength);
+}
+
+function addEvents(arrLength) {
+  for (let i = 0; i < arrLength; i++) {
+    let node = bookDisplay.children[i];
+
+    node.querySelector('.read').onclick = () => {
+      myLibrary[node.getAttribute("data-index")].read =
+        !myLibrary[node.getAttribute("data-index")].read;
+      updateDisplay();
+    };
+    node.querySelector('.remove-btn').onclick = () => {
+      myLibrary.splice(node.getAttribute('data-index'), 1);
+      updateDisplay();
+    };
+    node.querySelector(".edit-btn").onclick = () => {
+      node.innerHTML = `<form>
+      <fieldset>
+          <legend>Edit</legend>
+          <div>
+              <label for="book-title">Title</label>
+              <input type="text" id="book-title" required/>
+          </div>
+          <div>
+              <label for="book-author">Author</label>
+              <input type="text" id="book-author" required/>
+          </div>
+          <div>
+              <label for="book-pages">Number of pages</label>
+              <input type="number" id="book-pages" required/>
+          </div>
+          <button id="cancel-btn" class="btn-red">Cancel</button>
+          <button type="submit" class="btn-red">Add book</button>
+      </fieldset>
+  </form>`;
+      return;
+    };
+  }
+}
+
+function clearDisplay() {
+  for (let i = 0; i < bookDisplay.children.length; i++) {
+    if (bookDisplay.children[i].getAttribute('data-index')) {
+      bookDisplay.removeChild(bookDisplay.children[i]);
+    }
   }
 }
