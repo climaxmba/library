@@ -79,10 +79,18 @@ function addEvents(arrLength) {
   </form>`;
       document.getElementById(`submit-${i}-button`).onclick = (e) => {
         e.preventDefault();
-        myLibrary[i].title = document.getElementById(`book-${i}-title`).value;
-        myLibrary[i].author = document.getElementById(`book-${i}-author`).value;
-        myLibrary[i].pages = document.getElementById(`book-${i}-pages`).value;
-        updateDisplay();
+        if (
+          document.getElementById(`book-${i}-title`).value &&
+          document.getElementById(`book-${i}-author`).value &&
+          document.getElementById(`book-${i}-pages`).value
+        ) {
+          myLibrary[i].title = document.getElementById(`book-${i}-title`).value;
+          myLibrary[i].author = document.getElementById(`book-${i}-author`).value;
+          myLibrary[i].pages = document.getElementById(`book-${i}-pages`).value;
+          updateDisplay();
+        } else {
+          alert('Fill in the fields correctly');
+        }
       };
       document.getElementById(`cancel-${i}-btn`).onclick = () => {
         updateDisplay();
