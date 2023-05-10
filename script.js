@@ -62,21 +62,31 @@ function addEvents(arrLength) {
       <fieldset>
           <legend>Edit</legend>
           <div>
-              <label for="book-title">Title</label>
-              <input type="text" id="book-title" value="${myLibrary[i].title}" required/>
+              <label for="book-${i}-title">Title</label>
+              <input type="text" id="book-${i}-title" value="${myLibrary[i].title}" required/>
           </div>
           <div>
-              <label for="book-author">Author</label>
-              <input type="text" id="book-author" value="${myLibrary[i].author}" required/>
+              <label for="book-${i}-author">Author</label>
+              <input type="text" id="book-${i}-author" value="${myLibrary[i].author}" required/>
           </div>
           <div>
-              <label for="book-pages">Number of pages</label>
-              <input type="number" id="book-pages" value="${myLibrary[i].pages}" required/>
+              <label for="book-${i}-pages">Number of pages</label>
+              <input type="number" id="book-${i}-pages" value="${myLibrary[i].pages}" required/>
           </div>
-          <button type="button" id="cancel-btn" class="btn-red">Cancel</button>
-          <button type="submit" class="btn-red">Save</button>
+          <button type="button" id="cancel-${i}-btn" class="btn-red">Cancel</button>
+          <button type="submit" id="submit-${i}-button" class="btn-red">Save</button>
       </fieldset>
   </form>`;
+      document.getElementById(`submit-${i}-button`).onclick = (e) => {
+        e.preventDefault();
+        myLibrary[i].title = document.getElementById(`book-${i}-title`).value;
+        myLibrary[i].author = document.getElementById(`book-${i}-author`).value;
+        myLibrary[i].pages = document.getElementById(`book-${i}-pages`).value;
+        updateDisplay();
+      };
+      document.getElementById(`cancel-${i}-btn`).onclick = () => {
+        updateDisplay();
+      }
       return;
     };
   }
