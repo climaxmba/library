@@ -54,7 +54,6 @@ function cancelForm() {
   bookActions.innerHTML = defaultContent;
 }
 function submitForm() {
-  // preventDefault()
   if (
     document.getElementById('book-title').value &&
     document.getElementById('book-author').value &&
@@ -76,7 +75,7 @@ function submitForm() {
 
 function updateDisplay() {
   const arrLength = myLibrary.length;
-  clearDisplay();
+  clearBooks();
 
   for (let i = 0; i < arrLength; i++) {
     let node = document.createElement("div");
@@ -148,12 +147,12 @@ function addEvents() {
       };
       document.getElementById(`cancel-${i}-btn`).onclick = () => {
         updateDisplay();
-      }
+      };
     };
   }
 }
 
-function clearDisplay() {
+function clearBooks() {
   for (let i = 0; i < bookDisplay.children.length; i++) {
     if (bookDisplay.children[i].getAttribute('data-index')) {
       bookDisplay.removeChild(bookDisplay.children[i]);
