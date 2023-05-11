@@ -18,25 +18,11 @@
 
         <div id="books">
             <div id="book-actions-container">
-                <form>
-                    <fieldset>
-                        <legend>Add new</legend>
-                        <div>
-                            <label for="book-title">Title</label>
-                            <input type="text" id="book-title" required/>
-                        </div>
-                        <div>
-                            <label for="book-author">Author</label>
-                            <input type="text" id="book-author" required/>
-                        </div>
-                        <div>
-                            <label for="book-pages">Number of pages</label>
-                            <input type="number" id="book-pages" required/>
-                        </div>
-                        <button type="button" id="cancel-btn" class="btn-red">Cancel</button>
-                        <button type="submit" class="btn-red">Add book</button>
-                    </fieldset>
-                </form>
+                <div id="action-btns-container">
+                    <h3>Actions</h3>
+                    <button class="btn-green add-btn" onclick="openForm()">Add new book</button>
+                    <button class="btn-red clear-btn">Clear all</button>
+                </div>
             </div>
         </div>
     

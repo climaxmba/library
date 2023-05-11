@@ -7,23 +7,75 @@ function Book(title, author, pages, read) {
   this.read = read;
   this.info = function () {
     return `${this.title} by ${this.author}, ${this.pages} pages, ${
-      this.read ? "read" : "not read yet"
+      this.read ? "read." : "not read yet."
     }`;
   };
 }
 
-const defaultBook = new Book("The Hobbit", "J.R.R. Tolkien", 295, false);
 const bookDisplay = document.getElementById("books");
+const bookActions = document.getElementById('book-actions-container');
+
+const defaultContent = `<div id="action-btns-container">
+    <h3>Actions</h3>
+    <button class="btn-green add-btn" onclick="openForm()">Add new book</button>
+    <button class="btn-red clear-btn">Clear all</button>
+</div>`;
+const formContent = `<form>
+<fieldset>
+    <legend>Add new</legend>
+    <div>
+        <label for="book-title">Title</label>
+        <input type="text" id="book-title" required/>
+    </div>
+    <div>
+        <label for="book-author">Author</label>
+        <input type="text" id="book-author" required/>
+    </div>
+    <div>
+        <label for="book-pages">Number of pages</label>
+        <input type="number" id="book-pages" required/>
+    </div>
+    <button type="button" id="cancel-btn" class="btn-red" onclick="cancelForm()">Cancel</button>
+    <button type="submit" class="btn-red" onclick="submitForm()">Add book</button>
+</fieldset>
+</form>`;
 
 function addBookToLibrary(Book) {
   myLibrary.push(Book);
 }
 
-addBookToLibrary(defaultBook);
-updateDisplay();
+function openForm() {
+  bookActions.innerHTML = formContent;
+  bookActions.querySelector('form').onsubmit = (e) => {
+    e.preventDefault();
+  }
+}
+function cancelForm() {
+  bookActions.innerHTML = defaultContent;
+}
+function submitForm() {
+  // preventDefault()
+  if (
+    document.getElementById('book-title').value &&
+    document.getElementById('book-author').value &&
+    document.getElementById('book-pages').value
+  ) {
+    const book = new Book(
+      document.getElementById("book-title").value,
+      document.getElementById("book-author").value,
+      document.getElementById("book-pages").value,
+      false
+    );
+    addBookToLibrary(book);
+    updateDisplay();
+    bookActions.innerHTML = defaultContent;
+  } else {
+    alert('Fill in the fields correctly');
+  }
+}
 
 function updateDisplay() {
-  let arrLength = myLibrary.length;
+  const arrLength = myLibrary.length;
   clearDisplay();
 
   for (let i = 0; i < arrLength; i++) {
@@ -41,10 +93,12 @@ function updateDisplay() {
     bookDisplay.insertBefore(node, bookDisplay.children[i]);
   }
 
-  addEvents(arrLength);
+  addEvents();
 }
 
-function addEvents(arrLength) {
+function addEvents() {
+  const arrLength = myLibrary.length;
+
   for (let i = 0; i < arrLength; i++) {
     let node = bookDisplay.children[i];
 
@@ -60,23 +114,23 @@ function addEvents(arrLength) {
     node.querySelector(".edit-btn").onclick = () => {
       node.innerHTML = `<form>
       <fieldset>
-          <legend>Edit</legend>
-          <div>
-              <label for="book-${i}-title">Title</label>
-              <input type="text" id="book-${i}-title" value="${myLibrary[i].title}" required/>
-          </div>
-          <div>
-              <label for="book-${i}-author">Author</label>
-              <input type="text" id="book-${i}-author" value="${myLibrary[i].author}" required/>
-          </div>
-          <div>
-              <label for="book-${i}-pages">Number of pages</label>
-              <input type="number" id="book-${i}-pages" value="${myLibrary[i].pages}" required/>
-          </div>
-          <button type="button" id="cancel-${i}-btn" class="btn-red">Cancel</button>
-          <button type="submit" id="submit-${i}-button" class="btn-red">Save</button>
+        <legend>Edit</legend>
+        <div>
+          <label for="book-${i}-title">Title</label>
+          <input type="text" id="book-${i}-title" value="${myLibrary[i].title}" required/>
+        </div>
+        <div>
+          <label for="book-${i}-author">Author</label>
+          <input type="text" id="book-${i}-author" value="${myLibrary[i].author}" required/>
+        </div>
+        <div>
+          <label for="book-${i}-pages">Number of pages</label>
+          <input type="number" id="book-${i}-pages" value="${myLibrary[i].pages}" required/>
+        </div>
+        <button type="button" id="cancel-${i}-btn" class="btn-red">Cancel</button>
+        <button type="submit" id="submit-${i}-button" class="btn-red">Save</button>
       </fieldset>
-  </form>`;
+      </form>`;
       document.getElementById(`submit-${i}-button`).onclick = (e) => {
         e.preventDefault();
         if (
@@ -95,7 +149,6 @@ function addEvents(arrLength) {
       document.getElementById(`cancel-${i}-btn`).onclick = () => {
         updateDisplay();
       }
-      return;
     };
   }
 }

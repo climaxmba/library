@@ -42,7 +42,6 @@ body {
 #books > div,
 #books form {
     display: grid;
-    align-content: center;
 }
 
 div.book {
@@ -96,11 +95,22 @@ button.btn-green:active {
     background-color: unset;
 }
 
+/* Applies by default */
+#action-btns-container {
+    padding: 16px;
+    display: grid;
+    gap: 8px;
+    grid-template-rows: 1fr  auto auto;
+}
+#action-btns-container h3 {
+    margin: 0;
+}
+
+/* Applies when the form appears */
 div.book,
 #books form {
     padding: 16px;
 }
-
 #books fieldset {
     border: none;
     display: grid;
