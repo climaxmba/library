@@ -18,7 +18,7 @@ const bookActions = document.getElementById('book-actions-container');
 const defaultContent = `<div id="action-btns-container">
     <h3>Actions</h3>
     <button class="btn-green add-btn" onclick="openForm()">Add new book</button>
-    <button class="btn-red clear-btn">Clear all</button>
+    <button class="btn-red clear-btn" onclick="deleteBooks()">Clear all</button>
 </div>`;
 const formContent = `<form>
 <fieldset>
@@ -49,6 +49,10 @@ function openForm() {
   bookActions.querySelector('form').onsubmit = (e) => {
     e.preventDefault();
   }
+}
+function deleteBooks() {
+  myLibrary = [];
+  updateDisplay();
 }
 function cancelForm() {
   bookActions.innerHTML = defaultContent;
