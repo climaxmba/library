@@ -1,6 +1,6 @@
 :root {
-    --button-red: #b90000;
-    --button-green: #0d7400;
+    --button-red: #ffaeae;
+    --button-green: #adffb1;
     --radius: 12px;
     --card: 2px 2px 5px 1px #00000040;
     --card-inset: inset 0 3px 5px #00000040;
@@ -21,6 +21,18 @@ body {
 }
 #header h1 {
     margin: 0;
+}
+#header button {
+    padding: 4px;
+    border: none;
+    background-color: #474747;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#header button:active {
+    background-color: inherit;
+    color: black;
 }
 
 #main {
@@ -71,31 +83,28 @@ div.book p {
 }
 #books button {
     font-weight: bold;
-    border: none;
     border-radius: calc(var(--radius) - 4px);
     padding: 12px 0;
     cursor: pointer;
 }
-#books button:hover {
+button:hover {
     opacity: 0.8;
 }
 button.btn-red {
     font-weight: bold;
-    color: white;
     background-color: var(--button-red);
 }
 button.btn-red:active {
-    color: var(--button-red);
-    background-color: unset;
+    border: 2px solid var(--button-red);
+    background-color: inherit;
 }
 button.btn-green {
     font-weight: bold;
-    color: white;
     background-color: var(--button-green);
 }
 button.btn-green:active {
-    color: var(--button-green);
-    background-color: unset;
+    border: 2px solid var(--button-green);
+    background-color: inherit;
 }
 
 /* Applies by default */
