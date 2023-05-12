@@ -40,8 +40,8 @@ const formContent = `<form>
 </fieldset>
 </form>`;
 
-function addBookToLibrary(Book) {
-  myLibrary.push(Book);
+function addBookToLibrary(book) {
+  myLibrary.push(book);
 }
 
 function openForm() {
@@ -78,88 +78,73 @@ function submitForm() {
 }
 
 function updateDisplay() {
-  const arrLength = myLibrary.length;
   clearBooks();
+  const arrLength = myLibrary.length;
 
   for (let i = 0; i < arrLength; i++) {
-    let node = document.createElement("div");
+    const node = document.createElement("div");
     node.setAttribute('data-index', `${i}`);
 
     node.innerHTML = `<div class="book">
                         <h3>${myLibrary[i].title}</h3>
                         <p>${myLibrary[i].info()}</p>
-                        <button class="read btn-green">${(myLibrary[i].read) ? "Mark as unread" : "Mark as read"}</button>
-                        <button class="edit-btn btn-green">Edit</button>
-                        <button class="remove-btn btn-red">Remove</button>
+                        <button class="read btn-green" onclick="toggleReadState(${i})">${(myLibrary[i].read) ? "Mark as unread" : "Mark as read"}</button>
+                        <button class="edit-btn btn-green" onclick="changeToForm(${i})">Edit</button>
+                        <button class="remove-btn btn-red" onclick="removeBook(${i})">Remove</button>
                       </div>`;
 
     bookDisplay.insertBefore(node, bookDisplay.children[i]);
   }
-
-  addEvents();
 }
 
-function addEvents() {
-  const arrLength = myLibrary.length;
-
-  for (let i = 0; i < arrLength; i++) {
-    let node = bookDisplay.children[i];
-
-    node.querySelector('.read').onclick = () => {
-      myLibrary[node.getAttribute("data-index")].read =
-        !myLibrary[node.getAttribute("data-index")].read;
-      updateDisplay();
-    };
-    node.querySelector('.remove-btn').onclick = () => {
-      myLibrary.splice(node.getAttribute('data-index'), 1);
-      updateDisplay();
-    };
-    node.querySelector(".edit-btn").onclick = () => {
-      node.innerHTML = `<form>
-      <fieldset>
-        <legend>Edit</legend>
-        <div>
-          <label for="book-${i}-title">Title</label>
-          <input type="text" id="book-${i}-title" value="${myLibrary[i].title}" required/>
-        </div>
-        <div>
-          <label for="book-${i}-author">Author</label>
-          <input type="text" id="book-${i}-author" value="${myLibrary[i].author}" required/>
-        </div>
-        <div>
-          <label for="book-${i}-pages">Number of pages</label>
-          <input type="number" id="book-${i}-pages" value="${myLibrary[i].pages}" required/>
-        </div>
-        <button type="button" id="cancel-${i}-btn" class="btn-red">Cancel</button>
-        <button type="submit" id="submit-${i}-button" class="btn-red">Save</button>
-      </fieldset>
-      </form>`;
-      document.getElementById(`submit-${i}-button`).onclick = (e) => {
-        e.preventDefault();
-        if (
-          document.getElementById(`book-${i}-title`).value &&
-          document.getElementById(`book-${i}-author`).value &&
-          document.getElementById(`book-${i}-pages`).value
-        ) {
-          myLibrary[i].title = document.getElementById(`book-${i}-title`).value;
-          myLibrary[i].author = document.getElementById(`book-${i}-author`).value;
-          myLibrary[i].pages = document.getElementById(`book-${i}-pages`).value;
-          updateDisplay();
-        } else {
-          alert('Fill in the fields correctly');
-        }
-      };
-      document.getElementById(`cancel-${i}-btn`).onclick = () => {
-        updateDisplay();
-      };
-    };
-  }
+function toggleReadState(index) {
+  myLibrary[index].read = !myLibrary[index].read;
+  updateDisplay();
+}
+function changeToForm(index) {
+  bookDisplay.children[index].innerHTML = `<form>
+    <fieldset>
+      <legend>Edit</legend>
+      <div>
+        <label for="book-${index}-title">Title</label>
+        <input type="text" id="book-${index}-title" value="${myLibrary[index].title}" required/>
+      </div>
+      <div>
+        <label for="book-${index}-author">Author</label>
+        <input type="text" id="book-${index}-author" value="${myLibrary[index].author}" required/>
+      </div>
+      <div>
+        <label for="book-${index}-pages">Number of pages</label>
+        <input type="number" id="book-${index}-pages" value="${myLibrary[index].pages}" required/>
+      </div>
+        <button type="button" id="cancel-${index}-btn" class="btn-red" onclick="revertToBook(${index})">Cancel</button>
+        <button type="submit" id="submit-${index}-button" class="btn-red" onclick="saveChanges(${index})">Save</button>
+    </fieldset>
+    </form>`;
+  bookDisplay.children[index].querySelector('form').onsubmit = (e) => e.preventDefault();
+}
+function removeBook(index) {
+  myLibrary.splice(index, 1);
+  updateDisplay();
+}
+function revertToBook(index) {
+  bookDisplay.children[index].innerHTML = `<div class="book">
+      <h3>${myLibrary[index].title}</h3>
+      <p>${myLibrary[index].info()}</p>
+      <button class="read btn-green">${(myLibrary[index].read) ? "Mark as unread" : "Mark as read"}</button>
+      <button class="edit-btn btn-green" onclick="changeToForm(${index})">Edit</button>
+      <button class="remove-btn btn-red" onclick="removeBook(${index})">Remove</button>
+    </div>`;
+}
+function saveChanges(index) {
+  myLibrary[index].title = document.getElementById(`book-${index}-title`).value;
+  myLibrary[index].author = document.getElementById(`book-${index}-author`).value;
+  myLibrary[index].pages = document.getElementById(`book-${index}-pages`).value;
+  updateDisplay();
 }
 
-function clearBooks() {
-  for (let i = 0; i < bookDisplay.children.length; i++) {
-    if (bookDisplay.children[i].getAttribute('data-index')) {
-      bookDisplay.removeChild(bookDisplay.children[i]);
-    }
+function clearBooks() {;
+  for (let i = 0; bookDisplay.children[i].hasAttribute('data-index'); i = i) {
+    bookDisplay.children[i].remove();
   }
 }
