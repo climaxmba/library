@@ -61,9 +61,13 @@ div.book h3,
     font-weight: bold;
 }
 
-div.book p,
-#books label {
+div.book p {
     font-size: 0.9em;
+    margin: 0;
+}
+#books label {
+    font-size: 0.85em;
+    letter-spacing: 1.5px;
     margin: 0;
 }
 #books button {
