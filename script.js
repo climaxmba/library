@@ -46,16 +46,17 @@ function addBookToLibrary(book) {
 
 function validateForm(index) {
   if (index !== undefined) {
+    const btn = document.getElementById(`submit-${index}-btn`);
+    btn.addEventListener('click', (e) => e.preventDefault());
     if (
       document.getElementById(`book-${index}-title`).value &&
       document.getElementById(`book-${index}-author`).value &&
       document.getElementById(`book-${index}-pages`).value
     ) {
-      document.getElementById(`submit-${index}-btn`).className = 'btn-green';
+      btn.className = 'btn-green';
     } else {
-      document.getElementById(`submit-${index}-btn`).className = 'btn-red';
+      btn.className = 'btn-red';
     }
-    console.log('validated ', index);
   } else {
     if (
       document.getElementById('book-title').value &&
@@ -70,9 +71,7 @@ function validateForm(index) {
 }
 function openForm() {
   bookActions.innerHTML = formContent;
-  bookActions.querySelector('form').onsubmit = (e) => {
-    e.preventDefault();
-  }
+  document.getElementById('submit-btn').addEventListener('click', (e) => e.preventDefault());
 }
 function deleteBooks() {
   myLibrary = [];
@@ -110,12 +109,12 @@ function updateDisplay() {
     node.setAttribute('data-index', `${i}`);
 
     node.innerHTML = `<div class="book">
-                        <h3>${myLibrary[i].title}</h3>
-                        <p>${myLibrary[i].info()}</p>
-                        <button class="read btn-green" onclick="toggleReadState(${i})">${(myLibrary[i].read) ? "Mark as unread" : "Mark as read"}</button>
-                        <button class="edit-btn btn-green" onclick="changeToForm(${i})">Edit</button>
-                        <button class="remove-btn btn-red" onclick="removeBook(${i})">Remove</button>
-                      </div>`;
+        <h3>${myLibrary[i].title}</h3>
+        <p>${myLibrary[i].info()}</p>
+        <button class="read btn-green" onclick="toggleReadState(${i})">${(myLibrary[i].read) ? "Mark as unread" : "Mark as read"}</button>
+        <button class="edit-btn btn-green" onclick="changeToForm(${i})">Edit</button>
+        <button class="remove-btn btn-red" onclick="removeBook(${i})">Remove</button>
+      </div>`;
 
     bookDisplay.insertBefore(node, bookDisplay.children[i]);
   }
@@ -145,7 +144,6 @@ function changeToForm(index) {
       <button type="submit" id="submit-${index}-btn" class="btn-green" onclick="saveChanges(${index})">Save</button>
     </fieldset>
     </form>`;
-  bookDisplay.children[index].querySelector('form').onsubmit = (e) => e.preventDefault();
 }
 function removeBook(index) {
   myLibrary.splice(index, 1);
@@ -161,10 +159,15 @@ function revertToBook(index) {
     </div>`;
 }
 function saveChanges(index) {
-  myLibrary[index].title = document.getElementById(`book-${index}-title`).value;
-  myLibrary[index].author = document.getElementById(`book-${index}-author`).value;
-  myLibrary[index].pages = document.getElementById(`book-${index}-pages`).value;
-  updateDisplay();
+  if (document.getElementById(`submit-${index}-btn`).className === 'btn-green') {
+    myLibrary[index].title = document.getElementById(`book-${index}-title`).value;
+    myLibrary[index].author = document.getElementById(`book-${index}-author`).value;
+    myLibrary[index].pages = document.getElementById(`book-${index}-pages`).value;
+    updateDisplay();
+  } else {
+    alert('No empty fields allowed!');
+  }
+
 }
 
 function clearBooks() {;
