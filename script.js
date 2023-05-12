@@ -131,7 +131,7 @@ function revertToBook(index) {
   bookDisplay.children[index].innerHTML = `<div class="book">
       <h3>${myLibrary[index].title}</h3>
       <p>${myLibrary[index].info()}</p>
-      <button class="read btn-green">${(myLibrary[index].read) ? "Mark as unread" : "Mark as read"}</button>
+      <button class="read btn-green" onclick="toggleReadState(${index})">${(myLibrary[index].read) ? "Mark as unread" : "Mark as read"}</button>
       <button class="edit-btn btn-green" onclick="changeToForm(${index})">Edit</button>
       <button class="remove-btn btn-red" onclick="removeBook(${index})">Remove</button>
     </div>`;
