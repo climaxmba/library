@@ -25,18 +25,18 @@ const formContent = `<form>
     <legend>Add new</legend>
     <div>
         <label for="book-title">Title</label>
-        <input type="text" id="book-title" required/>
+        <input type="text" id="book-title" onkeyup="validateForm()" required/>
     </div>
     <div>
         <label for="book-author">Author</label>
-        <input type="text" id="book-author" required/>
+        <input type="text" id="book-author" onkeyup="validateForm()" required/>
     </div>
     <div>
         <label for="book-pages">Number of pages</label>
-        <input type="number" id="book-pages" required/>
+        <input type="number" id="book-pages" onkeyup="validateForm()" required/>
     </div>
     <button type="button" id="cancel-btn" class="btn-red" onclick="cancelForm()">Cancel</button>
-    <button type="submit" class="btn-red" onclick="submitForm()">Add book</button>
+    <button type="submit" id="submit-btn" class="btn-red" onclick="submitForm()">Add book</button>
 </fieldset>
 </form>`;
 
@@ -44,6 +44,30 @@ function addBookToLibrary(book) {
   myLibrary.push(book);
 }
 
+function validateForm(index) {
+  if (index !== undefined) {
+    if (
+      document.getElementById(`book-${index}-title`).value &&
+      document.getElementById(`book-${index}-author`).value &&
+      document.getElementById(`book-${index}-pages`).value
+    ) {
+      document.getElementById(`submit-${index}-btn`).className = 'btn-green';
+    } else {
+      document.getElementById(`submit-${index}-btn`).className = 'btn-red';
+    }
+    console.log('validated ', index);
+  } else {
+    if (
+      document.getElementById('book-title').value &&
+      document.getElementById('book-author').value &&
+      document.getElementById('book-pages').value
+    ) {
+      document.getElementById('submit-btn').className = 'btn-green';
+    } else {
+      document.getElementById('submit-btn').className = 'btn-red';
+    }
+  }
+}
 function openForm() {
   bookActions.innerHTML = formContent;
   bookActions.querySelector('form').onsubmit = (e) => {
@@ -107,18 +131,18 @@ function changeToForm(index) {
       <legend>Edit</legend>
       <div>
         <label for="book-${index}-title">Title</label>
-        <input type="text" id="book-${index}-title" value="${myLibrary[index].title}" required/>
+        <input type="text" id="book-${index}-title" value="${myLibrary[index].title}" onkeyup="validateForm(${index})" required/>
       </div>
       <div>
         <label for="book-${index}-author">Author</label>
-        <input type="text" id="book-${index}-author" value="${myLibrary[index].author}" required/>
+        <input type="text" id="book-${index}-author" value="${myLibrary[index].author}" onkeyup="validateForm(${index})" required/>
       </div>
       <div>
         <label for="book-${index}-pages">Number of pages</label>
-        <input type="number" id="book-${index}-pages" value="${myLibrary[index].pages}" required/>
+        <input type="number" id="book-${index}-pages" value="${myLibrary[index].pages}" onkeyup="validateForm(${index})" required/>
       </div>
-        <button type="button" id="cancel-${index}-btn" class="btn-red" onclick="revertToBook(${index})">Cancel</button>
-        <button type="submit" id="submit-${index}-button" class="btn-red" onclick="saveChanges(${index})">Save</button>
+      <button type="button" id="cancel-${index}-btn" class="btn-red" onclick="revertToBook(${index})">Cancel</button>
+      <button type="submit" id="submit-${index}-btn" class="btn-green" onclick="saveChanges(${index})">Save</button>
     </fieldset>
     </form>`;
   bookDisplay.children[index].querySelector('form').onsubmit = (e) => e.preventDefault();
