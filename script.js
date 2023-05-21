@@ -6,9 +6,9 @@ function Book(title, author, pages, read) {
   this.pages = pages;
   this.read = read;
   this.info = function () {
-    return `${this.title} by ${this.author}, ${this.pages} pages, ${
-      this.read ? "read." : "not read yet."
-    }`;
+    return `${this.title} by ${this.author}, ${
+      this.pages == 1 ? this.pages + " page" : this.pages + " pages"
+    }, ${this.read ? "read." : "not read yet."}`;
   };
 }
 
