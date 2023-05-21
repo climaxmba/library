@@ -36,7 +36,7 @@ const formContent = `<form>
     </div>
     <div>
         <label for="book-pages">Number of pages</label>
-        <input type="number" id="book-pages" onkeyup="validateForm()" required/>
+        <input type="number" id="book-pages" min="1" onkeyup="validateForm()" required/>
     </div>
     <button type="button" id="cancel-btn" class="btn-red" onclick="cancelForm()">Cancel</button>
     <button type="submit" id="submit-btn" class="btn-red" onclick="submitForm()">Add book</button>
@@ -51,7 +51,7 @@ function validateForm(index) {
     if (
       document.getElementById(`book-${index}-title`).value &&
       document.getElementById(`book-${index}-author`).value &&
-      document.getElementById(`book-${index}-pages`).value
+      parseInt(document.getElementById(`book-${index}-pages`).value) >= 1
     ) {
       btn.className = 'btn-green';
     } else {
@@ -61,7 +61,7 @@ function validateForm(index) {
     if (
       document.getElementById('book-title').value &&
       document.getElementById('book-author').value &&
-      document.getElementById('book-pages').value
+      parseInt(document.getElementById('book-pages').value) >= 1
     ) {
       document.getElementById('submit-btn').className = 'btn-green';
     } else {
@@ -84,7 +84,7 @@ function openForm(index) {
       </div>
       <div>
         <label for="book-${index}-pages">Number of pages</label>
-        <input type="number" id="book-${index}-pages" value="${myLibrary[index].pages}" onkeyup="validateForm(${index})" required/>
+        <input type="number" id="book-${index}-pages" min="1" value="${myLibrary[index].pages}" onkeyup="validateForm(${index})" required/>
       </div>
       <button type="button" id="cancel-${index}-btn" class="btn-red" onclick="revertToBook(${index})">Cancel</button>
       <button type="submit" id="submit-${index}-btn" class="btn-green" onclick="saveChanges(${index})">Save</button>
@@ -114,7 +114,7 @@ function submitForm() {
     const book = new Book(
       document.getElementById("book-title").value,
       document.getElementById("book-author").value,
-      document.getElementById("book-pages").value,
+      parseInt(document.getElementById("book-pages").value),
       false
     );
     addBookToLibrary(book);
@@ -166,7 +166,7 @@ function saveChanges(index) {
   if (document.getElementById(`submit-${index}-btn`).className === 'btn-green') {
     myLibrary[index].title = document.getElementById(`book-${index}-title`).value;
     myLibrary[index].author = document.getElementById(`book-${index}-author`).value;
-    myLibrary[index].pages = document.getElementById(`book-${index}-pages`).value;
+    myLibrary[index].pages = parseInt(document.getElementById(`book-${index}-pages`).value);
     updateDisplay();
   } else {
     alert('No empty fields allowed!');
