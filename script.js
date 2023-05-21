@@ -12,9 +12,12 @@ function Book(title, author, pages, read) {
   };
 }
 
+function addBookToLibrary(book) {
+  myLibrary.push(book);
+}
+
 const bookDisplay = document.getElementById("books");
 const bookActions = document.getElementById('book-actions-container');
-
 const defaultContent = `<div id="action-btns-container">
     <h3>Actions</h3>
     <button class="btn-green add-btn" onclick="openForm()">Add new book</button>
@@ -40,9 +43,6 @@ const formContent = `<form>
 </fieldset>
 </form>`;
 
-function addBookToLibrary(book) {
-  myLibrary.push(book);
-}
 
 function validateForm(index) {
   if (index !== undefined) {
@@ -69,10 +69,35 @@ function validateForm(index) {
     }
   }
 }
-function openForm() {
-  bookActions.innerHTML = formContent;
-  document.getElementById('submit-btn').addEventListener('click', (e) => e.preventDefault());
+function openForm(index) {
+  if (index !== undefined) {
+    bookDisplay.children[index].innerHTML = `<form>
+    <fieldset>
+      <legend>Edit</legend>
+      <div>
+        <label for="book-${index}-title">Title</label>
+        <input type="text" id="book-${index}-title" value="${myLibrary[index].title}" onkeyup="validateForm(${index})" required/>
+      </div>
+      <div>
+        <label for="book-${index}-author">Author</label>
+        <input type="text" id="book-${index}-author" value="${myLibrary[index].author}" onkeyup="validateForm(${index})" required/>
+      </div>
+      <div>
+        <label for="book-${index}-pages">Number of pages</label>
+        <input type="number" id="book-${index}-pages" value="${myLibrary[index].pages}" onkeyup="validateForm(${index})" required/>
+      </div>
+      <button type="button" id="cancel-${index}-btn" class="btn-red" onclick="revertToBook(${index})">Cancel</button>
+      <button type="submit" id="submit-${index}-btn" class="btn-green" onclick="saveChanges(${index})">Save</button>
+    </fieldset>
+    </form>`;
+  } else {
+    bookActions.innerHTML = formContent;
+    document
+      .getElementById("submit-btn")
+      .addEventListener("click", (e) => e.preventDefault());
+  }
 }
+
 function deleteBooks() {
   myLibrary = [];
   updateDisplay();
@@ -112,7 +137,7 @@ function updateDisplay() {
         <h3>${myLibrary[i].title}</h3>
         <p>${myLibrary[i].info()}</p>
         <button class="read btn-green" onclick="toggleReadState(${i})">${(myLibrary[i].read) ? "Mark as unread" : "Mark as read"}</button>
-        <button class="edit-btn btn-green" onclick="changeToForm(${i})">Edit</button>
+        <button class="edit-btn btn-green" onclick="openForm(${i})">Edit</button>
         <button class="remove-btn btn-red" onclick="removeBook(${i})">Remove</button>
       </div>`;
 
@@ -124,27 +149,6 @@ function toggleReadState(index) {
   myLibrary[index].read = !myLibrary[index].read;
   updateDisplay();
 }
-function changeToForm(index) {
-  bookDisplay.children[index].innerHTML = `<form>
-    <fieldset>
-      <legend>Edit</legend>
-      <div>
-        <label for="book-${index}-title">Title</label>
-        <input type="text" id="book-${index}-title" value="${myLibrary[index].title}" onkeyup="validateForm(${index})" required/>
-      </div>
-      <div>
-        <label for="book-${index}-author">Author</label>
-        <input type="text" id="book-${index}-author" value="${myLibrary[index].author}" onkeyup="validateForm(${index})" required/>
-      </div>
-      <div>
-        <label for="book-${index}-pages">Number of pages</label>
-        <input type="number" id="book-${index}-pages" value="${myLibrary[index].pages}" onkeyup="validateForm(${index})" required/>
-      </div>
-      <button type="button" id="cancel-${index}-btn" class="btn-red" onclick="revertToBook(${index})">Cancel</button>
-      <button type="submit" id="submit-${index}-btn" class="btn-green" onclick="saveChanges(${index})">Save</button>
-    </fieldset>
-    </form>`;
-}
 function removeBook(index) {
   myLibrary.splice(index, 1);
   updateDisplay();
@@ -154,7 +158,7 @@ function revertToBook(index) {
       <h3>${myLibrary[index].title}</h3>
       <p>${myLibrary[index].info()}</p>
       <button class="read btn-green" onclick="toggleReadState(${index})">${(myLibrary[index].read) ? "Mark as unread" : "Mark as read"}</button>
-      <button class="edit-btn btn-green" onclick="changeToForm(${index})">Edit</button>
+      <button class="edit-btn btn-green" onclick="openForm(${index})">Edit</button>
       <button class="remove-btn btn-red" onclick="removeBook(${index})">Remove</button>
     </div>`;
 }
@@ -167,7 +171,6 @@ function saveChanges(index) {
   } else {
     alert('No empty fields allowed!');
   }
-
 }
 
 function clearBooks() {;
