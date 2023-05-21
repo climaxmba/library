@@ -43,7 +43,6 @@ const formContent = `<form>
 </fieldset>
 </form>`;
 
-
 function validateForm(index) {
   if (index !== undefined) {
     const btn = document.getElementById(`submit-${index}-btn`);
@@ -109,7 +108,7 @@ function submitForm() {
   if (
     document.getElementById('book-title').value &&
     document.getElementById('book-author').value &&
-    document.getElementById('book-pages').value
+    parseInt(document.getElementById('book-pages').value) >= 1
   ) {
     const book = new Book(
       document.getElementById("book-title").value,
@@ -169,7 +168,7 @@ function saveChanges(index) {
     myLibrary[index].pages = parseInt(document.getElementById(`book-${index}-pages`).value);
     updateDisplay();
   } else {
-    alert('No empty fields allowed!');
+    alert('Fill all fields correctly!');
   }
 }
 
