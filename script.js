@@ -173,8 +173,8 @@ function saveChanges(index) {
   }
 }
 
-function clearBooks() {;
-  for (let i = 0; bookDisplay.children[i].hasAttribute('data-index'); i = i) {
-    bookDisplay.children[i].remove();
+function clearBooks() {
+  while (bookDisplay.children[0].hasAttribute('data-index')) {
+    bookDisplay.children[0].remove();
   }
 }
