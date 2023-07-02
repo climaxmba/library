@@ -1,15 +1,18 @@
 let myLibrary = [];
 
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
-  this.info = function () {
+class Book {
+  constructor(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+  }
+
+  get info() {
     return `${this.title} by ${this.author}, ${
       this.pages == 1 ? this.pages + " page" : this.pages + " pages"
     }, ${this.read ? "read." : "not read yet."}`;
-  };
+  }
 }
 
 function addBookToLibrary(book) {
@@ -134,7 +137,7 @@ function updateDisplay() {
 
     node.innerHTML = `<div class="book">
         <h3>${myLibrary[i].title}</h3>
-        <p>${myLibrary[i].info()}</p>
+        <p>${myLibrary[i].info}</p>
         <button class="read btn-green" onclick="toggleReadState(${i})">${(myLibrary[i].read) ? "Mark as unread" : "Mark as read"}</button>
         <button class="edit-btn btn-green" onclick="openForm(${i})">Edit</button>
         <button class="remove-btn btn-red" onclick="removeBook(${i})">Remove</button>
@@ -155,7 +158,7 @@ function removeBook(index) {
 function revertToBook(index) {
   bookDisplay.children[index].innerHTML = `<div class="book">
       <h3>${myLibrary[index].title}</h3>
-      <p>${myLibrary[index].info()}</p>
+      <p>${myLibrary[index].info}</p>
       <button class="read btn-green" onclick="toggleReadState(${index})">${(myLibrary[index].read) ? "Mark as unread" : "Mark as read"}</button>
       <button class="edit-btn btn-green" onclick="openForm(${index})">Edit</button>
       <button class="remove-btn btn-red" onclick="removeBook(${index})">Remove</button>
