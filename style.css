@@ -1,4 +1,6 @@
 :root {
+    --maincolor: black;
+    --mainbgcolor: white;
     --button-red: #ffaeae;
     --button-green: #adffb1;
     --radius: 12px;
@@ -11,6 +13,8 @@ body {
     display: grid;
     grid-template-rows: auto minmax(95vh, 1fr) 48px;
     font-family: 'Open Sans', Helvetica, sans-serif;
+    background-color: var(--mainbgcolor);
+    color: var(--maincolor);
 }
 
 #header {
@@ -25,14 +29,14 @@ body {
 #header button {
     padding: 4px;
     border: none;
-    background-color: #474747;
-    color: white;
+    background-color: var(--maincolor);
+    color: var(--mainbgcolor);
     border-radius: 4px;
     cursor: pointer;
 }
 #header button:active {
     background-color: inherit;
-    color: black;
+    color: var(--maincolor);
 }
 
 #main {
@@ -86,6 +90,7 @@ div.book p {
     border-radius: calc(var(--radius) - 4px);
     padding: 12px 0;
     cursor: pointer;
+    color: var(--maincolor);
 }
 button:hover {
     opacity: 0.8;
@@ -138,7 +143,9 @@ div.book,
     padding: 3px 0;
     border: none;
     border-radius: 3px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--maincolor);
+    background-color: var(--mainbgcolor);
+    color: var(--maincolor);
 }
 #books input:active,
 #books input:focus {
@@ -161,4 +168,20 @@ div.book,
 }
 #footer svg {
     height: 26px;
+    fill: var(--maincolor);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --maincolor: white;
+        --mainbgcolor: #333333;
+        --button-red: #960000;
+        --button-green: #008b17;
+        --card: 0 0 0 2px #ffffff80;
+        --card-inset: inset 0 2px 0 #ffffff80;
+    }
+
+    #books button:not(:active) {
+        border-color: transparent;
+    }
 }
