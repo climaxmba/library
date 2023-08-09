@@ -13,8 +13,3 @@ This is the project __Library__ from [TheOdinProject](https://www.theodinproject
 ## 🐛 Found a bug?
 
 Feel free to create a _New issue_.
-
-## 🔜 Comming soon
-
-- Persistent storage.
-- Dark theme.
