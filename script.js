@@ -1,5 +1,3 @@
-let myLibrary = [];
-
 class Book {
   constructor(title, author, pages, read) {
     this.title = title;
@@ -13,10 +11,6 @@ class Book {
       this.pages == 1 ? this.pages + " page" : this.pages + " pages"
     }, ${this.read ? "read." : "not read yet."}`;
   }
-}
-
-function addBookToLibrary(book) {
-  myLibrary.push(book);
 }
 
 const bookDisplay = document.getElementById("books");
@@ -45,6 +39,29 @@ const formContent = `<form>
     <button type="submit" id="submit-btn" class="btn-red" onclick="submitForm()">Add book</button>
 </fieldset>
 </form>`;
+
+let myLibrary = parseData() || [];
+updateDisplay();
+
+function addBookToLibrary(book) {
+  myLibrary.push(book);
+  saveData();
+}
+
+function saveData() {
+  localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+}
+
+function parseData() {
+  if (!localStorage.getItem("myLibrary")) return null;
+  let library = [];
+
+  JSON.parse(localStorage.getItem("myLibrary")).forEach((book) => {
+    library.push(new Book(book.title, book.author, book.pages, book.read));
+  });
+
+  return library;
+}
 
 function validateForm(index) {
   if (index !== undefined) {
@@ -102,6 +119,7 @@ function openForm(index) {
 
 function deleteBooks() {
   myLibrary = [];
+  saveData();
   updateDisplay();
 }
 function cancelForm() {
@@ -149,10 +167,12 @@ function updateDisplay() {
 
 function toggleReadState(index) {
   myLibrary[index].read = !myLibrary[index].read;
+  saveData();
   updateDisplay();
 }
 function removeBook(index) {
   myLibrary.splice(index, 1);
+  saveData();
   updateDisplay();
 }
 function revertToBook(index) {
@@ -169,6 +189,7 @@ function saveChanges(index) {
     myLibrary[index].title = document.getElementById(`book-${index}-title`).value;
     myLibrary[index].author = document.getElementById(`book-${index}-author`).value;
     myLibrary[index].pages = parseInt(document.getElementById(`book-${index}-pages`).value);
+    saveData();
     updateDisplay();
   } else {
     alert('Fill all fields correctly!');
