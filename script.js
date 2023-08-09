@@ -146,7 +146,7 @@ function submitForm() {
 }
 
 function updateDisplay() {
-  clearBooks();
+  clearBooksOnDisplay();
   const arrLength = myLibrary.length;
 
   for (let i = 0; i < arrLength; i++) {
@@ -196,7 +196,7 @@ function saveChanges(index) {
   }
 }
 
-function clearBooks() {
+function clearBooksOnDisplay() {
   while (bookDisplay.children[0].hasAttribute('data-index')) {
     bookDisplay.children[0].remove();
   }
