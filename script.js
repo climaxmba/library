@@ -26,19 +26,35 @@ const formContent = `<form>
     <div>
         <label for="book-title">Title</label>
         <input type="text" id="book-title" onkeyup="validateForm()" required/>
+        <span class="error-message">test</span>
     </div>
     <div>
         <label for="book-author">Author</label>
         <input type="text" id="book-author" onkeyup="validateForm()" required/>
+        <span class="error-message"></span>
     </div>
     <div>
         <label for="book-pages">Number of pages</label>
         <input type="number" id="book-pages" min="1" onkeyup="validateForm()" required/>
+        <span class="error-message"></span>
     </div>
     <button type="button" id="cancel-btn" class="btn-red" onclick="cancelForm()">Cancel</button>
     <button type="submit" id="submit-btn" class="btn-red" onclick="submitForm()">Add book</button>
 </fieldset>
 </form>`;
+
+bookDisplay.addEventListener("input", validateFormData);
+
+function validateFormData(e) {
+  const elem = e.target
+  const errorElem = elem.parentElement.querySelector(".error-message");
+  if (!elem.checkValidity()) {
+    errorElem.textContent = elem.validationMessage;
+    errorElem.classList.add("active");
+  } else {
+    errorElem.classList.remove("active");
+  }
+}
 
 let myLibrary = parseData() || [];
 updateDisplay();
@@ -96,14 +112,17 @@ function openForm(index) {
       <div>
         <label for="book-${index}-title">Title</label>
         <input type="text" id="book-${index}-title" value="${myLibrary[index].title}" onkeyup="validateForm(${index})" required/>
+        <span class="error-message"></span>
       </div>
       <div>
         <label for="book-${index}-author">Author</label>
         <input type="text" id="book-${index}-author" value="${myLibrary[index].author}" onkeyup="validateForm(${index})" required/>
+        <span class="error-message"></span>
       </div>
       <div>
         <label for="book-${index}-pages">Number of pages</label>
         <input type="number" id="book-${index}-pages" min="1" value="${myLibrary[index].pages}" onkeyup="validateForm(${index})" required/>
+        <span class="error-message"></span>
       </div>
       <button type="button" id="cancel-${index}-btn" class="btn-red" onclick="revertToBook(${index})">Cancel</button>
       <button type="submit" id="submit-${index}-btn" class="btn-green" onclick="saveChanges(${index})">Save</button>
