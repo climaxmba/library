@@ -151,6 +151,18 @@ div.book,
 #books input:focus {
     outline: none;
 }
+#books .error-message:not(.active) {
+    display: none;
+}
+#books .error-message {
+    color: var(--maincolor);
+    background-color: var(--button-red);
+    font-size: small;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 2px 5px;
+    justify-self: start;
+}
 #books fieldset > *:not(button) {
     grid-column: 1 / -1;
 }
