@@ -39,11 +39,15 @@ const formContent = `<form novalidate>
         <span class="error-message"></span>
     </div>
     <button type="button" id="cancel-btn" class="btn-red" onclick="cancelForm()">Cancel</button>
-    <button type="submit" id="submit-btn" class="btn-red" onclick="submitForm()">Add book</button>
+    <button type="submit" id="submit-btn" class="btn-red">Add book</button>
 </fieldset>
 </form>`;
 
+let myLibrary = parseData() || [];
+updateDisplay();
+
 bookDisplay.addEventListener("input", validateForm);
+bookDisplay.addEventListener("click", saveFormData);
 
 function validateForm(e) {
   const elem = e.target,
@@ -61,9 +65,42 @@ function validateForm(e) {
     errorElem.classList.remove("active");
   }
 }
+function saveFormData(e) {
+  e.preventDefault();
+  const elem = e.target;
 
-let myLibrary = parseData() || [];
-updateDisplay();
+  if (elem.getAttribute("type") === "submit") {
+    const form = elem.form,
+      index = form.getAttribute("data-index") || undefined;
+
+    if (elem.id === "submit-btn" && elem.className === "btn-green") {
+      // New book
+      const book = new Book(
+        document.getElementById("book-title").value,
+        document.getElementById("book-author").value,
+        parseInt(document.getElementById("book-pages").value),
+        false
+      );
+      addBookToLibrary(book);
+      saveData();
+      updateDisplay();
+      bookActions.innerHTML = defaultContent;
+    } else if (index !== undefined && elem.className === "btn-green") {
+      // Update book
+      myLibrary[index].title = document.getElementById(
+        `book-${index}-title`
+      ).value;
+      myLibrary[index].author = document.getElementById(
+        `book-${index}-author`
+      ).value;
+      myLibrary[index].pages = parseInt(
+        document.getElementById(`book-${index}-pages`).value
+      );
+      saveData();
+      updateDisplay();
+    }
+  }
+}
 
 function addBookToLibrary(book) {
   myLibrary.push(book);
@@ -106,14 +143,11 @@ function openForm(index) {
         <span class="error-message"></span>
       </div>
       <button type="button" id="cancel-${index}-btn" class="btn-red" onclick="revertToBook(${index})">Cancel</button>
-      <button type="submit" id="submit-${index}-btn" class="btn-green" onclick="saveChanges(${index})">Save</button>
+      <button type="submit" id="submit-${index}-btn" class="btn-green">Save</button>
     </fieldset>
     </form>`;
   } else {
     bookActions.innerHTML = formContent;
-    document
-      .getElementById("submit-btn")
-      .addEventListener("click", (e) => e.preventDefault());
   }
 }
 
@@ -124,25 +158,6 @@ function deleteBooks() {
 }
 function cancelForm() {
   bookActions.innerHTML = defaultContent;
-}
-function submitForm() {
-  if (
-    document.getElementById('book-title').value &&
-    document.getElementById('book-author').value &&
-    parseInt(document.getElementById('book-pages').value) >= 1
-  ) {
-    const book = new Book(
-      document.getElementById("book-title").value,
-      document.getElementById("book-author").value,
-      parseInt(document.getElementById("book-pages").value),
-      false
-    );
-    addBookToLibrary(book);
-    updateDisplay();
-    bookActions.innerHTML = defaultContent;
-  } else {
-    alert('Fill in the fields correctly');
-  }
 }
 
 function updateDisplay() {
@@ -183,17 +198,6 @@ function revertToBook(index) {
       <button class="edit-btn btn-green" onclick="openForm(${index})">Edit</button>
       <button class="remove-btn btn-red" onclick="removeBook(${index})">Remove</button>
     </div>`;
-}
-function saveChanges(index) {
-  if (document.getElementById(`submit-${index}-btn`).className === 'btn-green') {
-    myLibrary[index].title = document.getElementById(`book-${index}-title`).value;
-    myLibrary[index].author = document.getElementById(`book-${index}-author`).value;
-    myLibrary[index].pages = parseInt(document.getElementById(`book-${index}-pages`).value);
-    saveData();
-    updateDisplay();
-  } else {
-    alert('Fill all fields correctly!');
-  }
 }
 
 function clearBooksOnDisplay() {
