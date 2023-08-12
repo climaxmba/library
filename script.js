@@ -20,22 +20,22 @@ const defaultContent = `<div id="action-btns-container">
     <button class="btn-green add-btn" onclick="openForm()">Add new book</button>
     <button class="btn-red clear-btn" onclick="deleteBooks()">Clear all</button>
 </div>`;
-const formContent = `<form>
+const formContent = `<form novalidate>
 <fieldset>
     <legend>Add new</legend>
     <div>
         <label for="book-title">Title</label>
-        <input type="text" id="book-title" onkeyup="validateForm()" required/>
+        <input type="text" id="book-title" required/>
         <span class="error-message">test</span>
     </div>
     <div>
         <label for="book-author">Author</label>
-        <input type="text" id="book-author" onkeyup="validateForm()" required/>
+        <input type="text" id="book-author" required/>
         <span class="error-message"></span>
     </div>
     <div>
         <label for="book-pages">Number of pages</label>
-        <input type="number" id="book-pages" min="1" onkeyup="validateForm()" required/>
+        <input type="number" id="book-pages" min="1" required/>
         <span class="error-message"></span>
     </div>
     <button type="button" id="cancel-btn" class="btn-red" onclick="cancelForm()">Cancel</button>
@@ -43,11 +43,17 @@ const formContent = `<form>
 </fieldset>
 </form>`;
 
-bookDisplay.addEventListener("input", validateFormData);
+bookDisplay.addEventListener("input", validateForm);
 
-function validateFormData(e) {
-  const elem = e.target
-  const errorElem = elem.parentElement.querySelector(".error-message");
+function validateForm(e) {
+  const elem = e.target,
+    errorElem = elem.parentElement.querySelector(".error-message"),
+    form = elem.form;
+
+  form.querySelector("button[type='submit']").className = form.checkValidity()
+    ? "btn-green"
+    : "btn-red";
+
   if (!elem.checkValidity()) {
     errorElem.textContent = elem.validationMessage;
     errorElem.classList.add("active");
@@ -79,49 +85,24 @@ function parseData() {
   return library;
 }
 
-function validateForm(index) {
-  if (index !== undefined) {
-    const btn = document.getElementById(`submit-${index}-btn`);
-    btn.addEventListener('click', (e) => e.preventDefault());
-    if (
-      document.getElementById(`book-${index}-title`).value &&
-      document.getElementById(`book-${index}-author`).value &&
-      parseInt(document.getElementById(`book-${index}-pages`).value) >= 1
-    ) {
-      btn.className = 'btn-green';
-    } else {
-      btn.className = 'btn-red';
-    }
-  } else {
-    if (
-      document.getElementById('book-title').value &&
-      document.getElementById('book-author').value &&
-      parseInt(document.getElementById('book-pages').value) >= 1
-    ) {
-      document.getElementById('submit-btn').className = 'btn-green';
-    } else {
-      document.getElementById('submit-btn').className = 'btn-red';
-    }
-  }
-}
 function openForm(index) {
   if (index !== undefined) {
-    bookDisplay.children[index].innerHTML = `<form>
+    bookDisplay.children[index].innerHTML = `<form data-index="${index}" novalidate>
     <fieldset>
       <legend>Edit</legend>
       <div>
         <label for="book-${index}-title">Title</label>
-        <input type="text" id="book-${index}-title" value="${myLibrary[index].title}" onkeyup="validateForm(${index})" required/>
+        <input type="text" id="book-${index}-title" value="${myLibrary[index].title}" required/>
         <span class="error-message"></span>
       </div>
       <div>
         <label for="book-${index}-author">Author</label>
-        <input type="text" id="book-${index}-author" value="${myLibrary[index].author}" onkeyup="validateForm(${index})" required/>
+        <input type="text" id="book-${index}-author" value="${myLibrary[index].author}" required/>
         <span class="error-message"></span>
       </div>
       <div>
         <label for="book-${index}-pages">Number of pages</label>
-        <input type="number" id="book-${index}-pages" min="1" value="${myLibrary[index].pages}" onkeyup="validateForm(${index})" required/>
+        <input type="number" id="book-${index}-pages" min="1" value="${myLibrary[index].pages}" required/>
         <span class="error-message"></span>
       </div>
       <button type="button" id="cancel-${index}-btn" class="btn-red" onclick="revertToBook(${index})">Cancel</button>
