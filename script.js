@@ -47,7 +47,7 @@ let myLibrary = parseData() || [];
 updateDisplay();
 
 bookDisplay.addEventListener("input", validateForm);
-bookDisplay.addEventListener("click", saveFormData);
+bookDisplay.addEventListener("click", saveBook);
 
 function validateForm(e) {
   const elem = e.target,
@@ -65,7 +65,7 @@ function validateForm(e) {
     errorElem.classList.remove("active");
   }
 }
-function saveFormData(e) {
+function saveBook(e) {
   e.preventDefault();
   const elem = e.target;
 
