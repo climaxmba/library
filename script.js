@@ -161,7 +161,7 @@ function cancelForm() {
 }
 
 function updateDisplay() {
-  clearBooksOnDisplay();
+  clearBooks();
   const arrLength = myLibrary.length;
 
   for (let i = 0; i < arrLength; i++) {
@@ -200,7 +200,7 @@ function revertToBook(index) {
     </div>`;
 }
 
-function clearBooksOnDisplay() {
+function clearBooks() {
   while (bookDisplay.children[0].hasAttribute('data-index')) {
     bookDisplay.children[0].remove();
   }
